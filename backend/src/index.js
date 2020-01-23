@@ -32,7 +32,7 @@ server.applyMiddleware({
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
-httpServer.listen(4444, () => console.log(`🚀 Server ready at http://localhost:4444`));
+httpServer.listen(process.env.PORT, () => console.log(`🚀 Server ready at http://localhost:4444`));
 // server.start(
 //   {
 //     cors: {
