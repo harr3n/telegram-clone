@@ -25,7 +25,6 @@ const StyledChatMessage = styled.li`
     }
     .text {
       font-size: 1.5rem;
-      line-height: 0.1;
     }
   }
   .time {
