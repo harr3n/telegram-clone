@@ -1,5 +1,6 @@
 import React from "react";
 import { gql, useMutation } from "@apollo/client";
+import styled from 'styled-components'
 import { useHistory } from "react-router";
 import useFormState from "../../lib/useFormState";
 
@@ -12,6 +13,24 @@ const SIGNUP_MUTATION = gql`
     signup(email: $email, name: $name, password: $password) {
       id
     }
+  }
+`;
+
+const StyledInput = styled.input`
+  margin-bottom: 1rem;
+  padding: 0 0 0 0.5rem;
+  width: 100%;
+  height: 3rem;
+  outline: none;
+  appearance: none;
+  border: none;
+  background-color: ${props => props.theme.background};
+  color: ${props => props.theme.text};
+  font-size: 1rem;
+  border-bottom: solid 1px ${props => props.theme.border};
+
+  &:placeholder {
+    color: ${props => props.theme.text};
   }
 `;
 
@@ -47,7 +66,7 @@ const SignUp = () => {
         <h2>Sign up</h2>
         <label htmlFor="email">
           email
-          <input
+          <StyledInput
             type="email"
             name="email"
             placeholder="email"
@@ -57,7 +76,7 @@ const SignUp = () => {
         </label>
         <label htmlFor="name">
           name
-          <input
+          <StyledInput
             type="text"
             name="name"
             placeholder="name"
@@ -67,7 +86,7 @@ const SignUp = () => {
         </label>
         <label htmlFor="password">
           password
-          <input
+          <StyledInput
             type="password"
             name="password"
             placeholder="password"
