@@ -19,7 +19,7 @@ import {
 
 import { WebSocketLink } from "apollo-link-ws";
 
-console.log(process.env.REACT_APP_KALLE_OLLE)
+console.log(process.env.REACT_APP_WS_ENDPOINT)
 
 // Create an http link:
 const httpLink = new HttpLink({
