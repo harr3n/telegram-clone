@@ -4,19 +4,16 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.20",
-    "@pusher/chatkit-client": "^1.13.3",
     "apollo-link-ws": "^1.0.19",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
-    "matrix-js-sdk": "^2.4.6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "styled-components": "^4.4.1",
-    "subscriptions-transport-ws": "^0.9.16",
-    "uuidv4": "^6.0.0"
+    "subscriptions-transport-ws": "^0.9.16"
   },
   "scripts": {
     "start": "react-scripts start",

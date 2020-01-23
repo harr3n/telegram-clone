@@ -8,8 +8,6 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import AddUser from "./pages/AddUser"
 
-import { endpoint, wsEndpoint } from "./config";
-
 import {
   ApolloClient,
   HttpLink,
@@ -21,9 +19,11 @@ import {
 
 import { WebSocketLink } from "apollo-link-ws";
 
+console.log(process.env.REACT_APP_KALLE_OLLE)
+
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: endpoint,
+  uri: process.env.REACT_APP_HTTP_ENDPOINT,
   fetchOptions: {
     credentials: "include"
   },
@@ -31,7 +31,7 @@ const httpLink = new HttpLink({
 });
 
 const wsLink = new WebSocketLink({
-  uri: wsEndpoint,
+  uri: process.env.REACT_APP_WS_ENDPOINT,
   credentials: "include",
   fetchOptions: {
     credentials: "include"
