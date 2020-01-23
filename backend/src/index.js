@@ -19,11 +19,13 @@ app.use((req, res, next) => {
   next();
 });
 
+console.log(process.env.NODE_ENV)
+
 const server = createServer();
 server.applyMiddleware({
   app,
   cors: {
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.NODE_ENV === 'development' ? process.env.FRONTEND_URL_DEV : process.env.FRONTEND_URL,
     credentials: true
   },
   path: "/graphql",
