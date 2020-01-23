@@ -1,2 +1,2 @@
-export const endpoint = `http://localhost:4444/graphql`;
-export const wsEndpoint = `ws://localhost:4444/graphql`;
+export const endpoint = `https://telegram-clone-gql-prod.herokuapp.com/graphql`;
+export const wsEndpoint = `ws://telegram-clone-gql-prod.herokuapp.com/graphql`;
