@@ -1,0 +1,35 @@
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission] @scalarList(strategy: RELATION)
+  chats: [Chat]
+  color: Int 
+}
+
+type Message {
+  id: ID! @id
+  text: String!
+  from: User
+  chatId: ID!
+  chat: Chat!
+  createdAt: DateTime !@createdAt
+}
+
+type Chat {
+  id: ID! @id
+  users: [User!]! 
+  messages: [Message]
+}
