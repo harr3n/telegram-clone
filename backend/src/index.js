@@ -26,7 +26,8 @@ server.applyMiddleware({
     origin: process.env.FRONTEND_URL,
     credentials: true
   },
-  path: "/graphql"
+  path: "/graphql",
+  introspection: true
 });
 
 const httpServer = http.createServer(app);
