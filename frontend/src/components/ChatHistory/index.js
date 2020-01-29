@@ -26,7 +26,6 @@ const ChatHistory = ({ data }) => {
       {data &&
         data.messages.map(message => (
           <ChatMessage key={message.id} message={message} />
-          // <p key={message.id}>{`${message.from.name}: ${message.text}`}</p>
         ))}
     </StyledChatHistory>
   );
