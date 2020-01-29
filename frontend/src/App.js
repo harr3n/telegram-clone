@@ -1,13 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
-
-import Sidebar from "./components/SideBar/index";
-import MainWindow from "./pages/MainWindow";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
-import AddUser from "./pages/AddUser"
-
 import {
   ApolloClient,
   HttpLink,
@@ -18,6 +11,13 @@ import {
 } from "@apollo/client";
 
 import { WebSocketLink } from "apollo-link-ws";
+
+import Sidebar from "./components/SideBar/index";
+import MainWindow from "./pages/MainWindow";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import AddUser from "./pages/AddUser";
+import { UserProvider } from "./context/userContext";
 
 // Create an http link:
 const httpLink = new HttpLink({
@@ -119,24 +119,26 @@ const App = () => {
       <ThemeProvider theme={night}>
         <StyledApp>
           <ApolloProvider client={client}>
-            <Router>
-              <Sidebar />
-              <Switch>
-                <Route exact path="/"></Route>
-                <Route exact path="/signup">
-                  <SignUp />
-                </Route>
-                <Route exact path="/signin">
-                  <SignIn />
-                </Route>
-                <Route path="/chat/:id">
-                  <MainWindow />
-                </Route>
-                <Route path="/add-user">
-                  <AddUser />
-                </Route>
-              </Switch>
-            </Router>
+            <UserProvider>
+              <Router>
+                <Sidebar />
+                <Switch>
+                  <Route exact path="/"></Route>
+                  <Route exact path="/signup">
+                    <SignUp />
+                  </Route>
+                  <Route exact path="/signin">
+                    <SignIn />
+                  </Route>
+                  <Route path="/chat/:id">
+                    <MainWindow />
+                  </Route>
+                  <Route path="/add-user">
+                    <AddUser />
+                  </Route>
+                </Switch>
+              </Router>
+            </UserProvider>
           </ApolloProvider>
         </StyledApp>
       </ThemeProvider>

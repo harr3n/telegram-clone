@@ -1,28 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
 import styled from "styled-components";
-import { useQuery, gql } from "@apollo/client";
 import { NavLink } from "react-router-dom";
+import userContext from "../../context/userContext";
 
 import SideBarItem from "../SideBarItem";
-
-const ME_QUERY = gql`
-  query ME_QUERY {
-    me {
-      id
-      name
-      email
-      permissions
-      chats {
-        id
-        users {
-          id
-          name
-          color
-        }
-      }
-    }
-  }
-`;
 
 const StyledSidebar = styled.div`
   height: 100vh;
@@ -41,8 +22,7 @@ const StyledSidebar = styled.div`
 `;
 
 const Sidebar = () => {
-  const { data } = useQuery(ME_QUERY);
-  const me = data && data.me;
+  const me = useContext(userContext)
 
   return (
     <StyledSidebar>
