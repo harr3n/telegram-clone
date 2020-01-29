@@ -12,7 +12,7 @@ const StyledChatMessage = styled.li`
 
   .avatar {
     align-self: start;
-    justify-self: center;
+    justify-self: start;
   }
 
   .message {
