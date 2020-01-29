@@ -1,17 +1,16 @@
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
-import ChatMessage from "../ChatMessage"
+import ChatMessage from "../ChatMessage";
 
 const StyledChatHistory = styled.ul`
   margin: 0 0 0 1rem;
   padding: 0;
   overflow: scroll;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-auto-rows: minmax(5rem, auto);
+  display: flex;
+  flex-direction: column;
 
-  p {
-    margin: 0;
+  li:first-child {
+    margin-top: auto;
   }
 `;
 
@@ -20,11 +19,10 @@ const ChatHistory = ({ data }) => {
 
   useEffect(() => {
     chatHistory.current.scrollTop = chatHistory.current.scrollHeight;
-  }, [data])
+  }, [data]);
 
   return (
     <StyledChatHistory ref={chatHistory}>
-      <li></li>
       {data &&
         data.messages.map(message => (
           <ChatMessage key={message.id} message={message} />

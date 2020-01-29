@@ -17,7 +17,8 @@ const StyledChatMessage = styled.li`
 
   .message {
     display: grid;
-    grid-template-rows: 2rem 1fr;
+    grid-template-rows: 2rem auto;
+    
     .name {
       font-size: 1rem;
       font-weight: bold;
@@ -25,6 +26,7 @@ const StyledChatMessage = styled.li`
     }
     .text {
       font-size: 1.5rem;
+      margin: 0;
     }
   }
   .time {
