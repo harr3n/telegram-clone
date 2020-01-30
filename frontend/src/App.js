@@ -9,7 +9,7 @@ import MainWindow from "./pages/MainWindow";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import AddUser from "./pages/AddUser";
-import { UserProvider } from "./context/userContext";
+import IsSignedIn from "./components/IsSignedIn";
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -70,16 +70,13 @@ const App = () => {
       <ThemeProvider theme={night}>
         <StyledApp>
           <ApolloProvider client={createClient()}>
-            <UserProvider>
-              <Router>
-                <Sidebar />
+            <Router>
+              <Sidebar />
+              <IsSignedIn>
                 <Switch>
                   <Route exact path="/"></Route>
                   <Route exact path="/signup">
                     <SignUp />
-                  </Route>
-                  <Route exact path="/signin">
-                    <SignIn />
                   </Route>
                   <Route path="/chat/:id">
                     <MainWindow />
@@ -88,8 +85,8 @@ const App = () => {
                     <AddUser />
                   </Route>
                 </Switch>
-              </Router>
-            </UserProvider>
+              </IsSignedIn>
+            </Router>
           </ApolloProvider>
         </StyledApp>
       </ThemeProvider>
