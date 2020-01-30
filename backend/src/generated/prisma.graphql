@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/erik-olsson-2ad37b/chat-backend/dev
-# timestamp: Wed Jan 22 2020 17:27:49 GMT+0100 (Central European Standard Time)
+# timestamp: Thu Jan 30 2020 02:29:19 GMT+0100 (Central European Standard Time)
 
 type AggregateChat {
   count: Int!
@@ -1574,5 +1574,6 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  name: String
   email: String
 }
