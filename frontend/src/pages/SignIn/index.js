@@ -5,8 +5,8 @@ import { useHistory } from "react-router";
 import useFormState from '../../lib/useFormState'
 
 const SIGNIN_MUTATION = gql`
-  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-    signin(email: $email, password: $password) {
+  mutation SIGNIN_MUTATION($name: String!, $password: String!) {
+    signin(name: $name, password: $password) {
       id
     }
   }
@@ -32,7 +32,7 @@ const StyledInput = styled.input`
 
 const SignIn = () => {
   const {state, handleChange, resetForm} = useFormState({
-    email: '',
+    name: '',
     password: ''
   })
   
@@ -41,7 +41,7 @@ const SignIn = () => {
 
   const submit = async e => {
     e.preventDefault();
-    const user = await signin({ variables: { email: state.email, password: state.password }, refetchQueries: ["ME_QUERY"] });
+    const user = await signin({ variables: { name: state.name, password: state.password }, refetchQueries: ["ME_QUERY"] });
 
     if (!user) return 
     resetForm()
@@ -52,12 +52,12 @@ const SignIn = () => {
     <form method="post" onSubmit={submit}>
       <fieldset>
         <h2>Sign in</h2>
-        <label htmlFor="email">
-          email
+        <label htmlFor="name">
+          name
           <StyledInput
-            type="email"
-            name="email"
-            placeholder="email"
+            type="text"
+            name="name"
+            placeholder="name"
             value={state.email}
             onChange={handleChange}
           />
