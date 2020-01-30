@@ -42,6 +42,7 @@ const ChatMessage = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!message) return
     sendMessage({ variables: { id, text: message } });
     setMessage("");
   };
