@@ -20,7 +20,7 @@ const StyledHeader = styled.div`
 `;
 
 const Header = ({ room, currentUserId }) => {
-  if (!room) return null;
+  if (!room) return <div></div>
   
   const otherUser = room.users.find(user => user.id !== currentUserId);
   const getColor = int =>
