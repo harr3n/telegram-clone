@@ -1,9 +1,10 @@
 import React, {useContext} from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import userContext from "../../context/userContext";
+import { useQuery } from "@apollo/client";
 
 import SideBarItem from "../SideBarItem";
+import { ME_QUERY } from "../../api/queries";
 
 const StyledSidebar = styled.div`
   height: 100vh;
@@ -22,7 +23,8 @@ const StyledSidebar = styled.div`
 `;
 
 const Sidebar = () => {
-  const me = useContext(userContext)
+  const { data } = useQuery(ME_QUERY) 
+  const me = data && data.me;
 
   return (
     <StyledSidebar>

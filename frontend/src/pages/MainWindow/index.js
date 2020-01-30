@@ -1,18 +1,17 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import styled from "styled-components";
 import ChatHistory from "../../components/ChatHistory";
 import Header from "../../components/Header";
 import ChatMessage from "../../components/SendMessage";
-import userContext from "../../context/userContext";
+import { ME_QUERY } from "../../api/queries";
 
 const StyledMainWindow = styled.div`
   height: 100vh;
   background-color: ${props => props.theme.background};
   display: grid;
   grid-template-rows: 3rem 1fr 3rem;
-  /* grid-gap: 1rem; */
 `;
 
 const ALL_MESSAGES_QUERY = gql`
@@ -33,7 +32,7 @@ const ALL_MESSAGES_QUERY = gql`
 
 const MainWindow = () => {
   const { id } = useParams();
-  const me = useContext(userContext);
+  const { data: userData } = useQuery(ME_QUERY) 
   const [getAllMessages, { data: messages }] = useLazyQuery(
     ALL_MESSAGES_QUERY,
     {
@@ -41,7 +40,7 @@ const MainWindow = () => {
     }
   );
 
-  const room = me && me.chats.find(room => room.id === id);
+  const room = userData && userData.me.chats.find(room => room.id === id);
 
   useEffect(() => {
     getAllMessages();
@@ -49,7 +48,7 @@ const MainWindow = () => {
 
   return (
     <StyledMainWindow>
-      <Header room={room} currentUserId={me && me.id} />
+      <Header room={room} currentUserId={userData && userData.me.id} />
       <ChatHistory data={messages} />
       <ChatMessage />
     </StyledMainWindow>
