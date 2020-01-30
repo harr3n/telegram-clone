@@ -25,7 +25,7 @@ const server = createServer();
 server.applyMiddleware({
   app,
   cors: {
-    origin: process.env.NODE_ENV === 'development' ? process.env.FRONTEND_URL_DEV : process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL,
     credentials: true
   },
   path: "/graphql",
@@ -35,25 +35,4 @@ server.applyMiddleware({
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
-httpServer.listen(process.env.PORT, () => console.log(`🚀 Server ready at http://localhost:4444`));
-// server.start(
-//   {
-//     cors: {
-//       credentials: true,
-//       origin: process.env.FRONTEND_URL
-//     },
-//     subscriptions: {
-//       onConnect: async (connectionParams, webSocket) => {
-//         const token = cookieParser.JSONCookie(webSocket.upgradeReq.headers.cookie)
-
-//         if (token) {
-//           const { userId } = jwt.verify(token, process.env.APP_SECRET)
-//           return userId
-//         }
-//       },
-//     },
-//   },
-//   res => {
-//     console.log(`Running on localhost:${res.port}`);
-//   }
-// );
+httpServer.listen(process.env.PORT, () => console.log(`🚀 Server ready on port ${process.env.PORT}`));
