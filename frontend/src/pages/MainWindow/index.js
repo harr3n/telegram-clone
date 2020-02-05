@@ -15,16 +15,25 @@ const StyledMainWindow = styled.div`
 `;
 
 const ALL_MESSAGES_QUERY = gql`
-  query ALL_MESSAGES_QUERY($chatId: ID!) {
-    messages(chatId: $chatId) {
-      id
-      text
-      createdAt
-      chatId
-      from {
-        id
-        name
-        color
+  query messages($chatId: ID!, $before: String) {
+    messages(chatId: $chatId, before: $before) {
+      pageInfo {
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          text
+          createdAt
+          chatId
+          from {
+            id
+            name
+            color
+          }
+        }
       }
     }
   }
