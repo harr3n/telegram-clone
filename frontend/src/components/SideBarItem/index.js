@@ -101,15 +101,17 @@ const SideBarItem = ({ chat, currentUserId }) => {
     return () => unsubscribe();
   }, [subscribeToMore]);
 
-  const getColor = int => ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"][int-1]
-  const otherUser = chat.users.find(user => user.id !== currentUserId)
-  const color = getColor(otherUser.color)
-
+  const getColor = int =>
+    ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"][int - 1];
+  const otherUser = chat.users.find(user => user.id !== currentUserId);
+  const color = getColor(otherUser.color);
 
   return (
     <StyledSideBarItem color={color}>
       <NavLink activeClassName="active" to={`/chat/${chat.id}`}>
-        <div className="bubble">{otherUser.name.substring(0, 1).toUpperCase()}</div>
+        <div className="bubble">
+          {otherUser.name.substring(0, 1).toUpperCase()}
+        </div>
       </NavLink>
     </StyledSideBarItem>
   );
