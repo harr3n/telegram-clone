@@ -6,8 +6,6 @@ import { ApolloProvider } from "@apollo/client";
 import createClient from "./lib/createClient"
 import Sidebar from "./components/SideBar/index";
 import MainWindow from "./pages/MainWindow";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
 import AddUser from "./pages/AddUser";
 import IsSignedIn from "./components/IsSignedIn";
 
@@ -75,9 +73,6 @@ const App = () => {
               <IsSignedIn>
                 <Switch>
                   <Route exact path="/"></Route>
-                  <Route exact path="/signup">
-                    <SignUp />
-                  </Route>
                   <Route path="/chat/:id">
                     <MainWindow />
                   </Route>
