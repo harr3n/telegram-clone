@@ -81,11 +81,17 @@ const SideBarItem = ({ chat, currentUserId }) => {
     const unsubscribe = subscribeToMore({
       document: MESSAGE_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
-        const newMessage = subscriptionData.data.message.node;
-        return Object.assign({}, prev, {
-          messages: [...prev.messages, newMessage]
-        });
+        const newMessage = subscriptionData.data.message;
+        const newMessages = {
+          ...prev,
+          messages: {
+            __typename: prev.messages.__typename,
+            pageInfo: prev.messages.pageInfo,
+            edges: [...prev.messages.edges, newMessage]
+          }
+        };
+
+        return newMessages;
       },
       variables: {
         chatId: chat.id
