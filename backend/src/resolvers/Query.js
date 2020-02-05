@@ -1,7 +1,7 @@
 const Query = {
-  async messages(parent, { chatId }, ctx, info) {
-    const messages = await ctx.db.query.messages(
-      { where: { chatId, chat: { users_some: { id: ctx.userId } } } },
+  async messages(parent, { chatId, orderBy, last = 50, before }, ctx, info) {
+    const messages = await ctx.db.query.messagesConnection(
+      { where: { chatId, chat: { users_some: { id: ctx.userId } } }, orderBy: "createdAt_ASC", last, before },
       info
     );
 
