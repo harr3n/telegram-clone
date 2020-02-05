@@ -42,7 +42,7 @@ const ALL_MESSAGES_QUERY = gql`
 const MainWindow = () => {
   const { id } = useParams();
   const { data: userData } = useQuery(ME_QUERY) 
-  const [getAllMessages, { data: messages }] = useLazyQuery(
+  const [getAllMessages, { data: messages, fetchMore, loading }] = useLazyQuery(
     ALL_MESSAGES_QUERY,
     {
       variables: { chatId: id }
@@ -58,7 +58,7 @@ const MainWindow = () => {
   return (
     <StyledMainWindow>
       <Header room={room} currentUserId={userData && userData.me.id} />
-      <ChatHistory data={messages} />
+      {messages ? <ChatHistory data={messages} fetchMore={fetchMore} loading={loading} /> : <div />}
       <ChatMessage />
     </StyledMainWindow>
   );
