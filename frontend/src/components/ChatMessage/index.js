@@ -38,8 +38,10 @@ const StyledChatMessage = styled.li`
 const ChatMessage = ({ message }) => {
   if (!message) return null;
 
-  const getColor = int =>
-    ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"][int - 1];
+  const colors = ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"];
+
+  const getColor = name =>
+    colors[name.toLocaleLowerCase().charCodeAt(0) % colors.length];
 
   const getTimeString = dateString => {
     const date = new Date(dateString);
@@ -55,7 +57,7 @@ const ChatMessage = ({ message }) => {
   return (
     <StyledChatMessage>
       <div className="avatar">
-        <SmallUserBadge color={getColor(message.from.color)}>
+        <SmallUserBadge color={getColor(message.from.name)}>
           {message.from.name.substring(0, 1)}
         </SmallUserBadge>
       </div>
