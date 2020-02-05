@@ -12,7 +12,7 @@ type Mutation {
 }
 
 type Query {
-    messages(chatId: ID): [Message] @isAuth
+    messages(chatId: ID, orderBy: String, first: Int, last: Int, before: String): MessageConnection @isAuth
     me: User @isAuth
     users: [User] @isAuth
 }
