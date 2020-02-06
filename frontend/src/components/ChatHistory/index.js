@@ -64,7 +64,6 @@ const ChatHistory = ({ data, fetchMore, loading }) => {
               : prev;
           }
         });
-        chatHistory.current.scrollTop = element.offsetTop
       }
     }, options);
 
