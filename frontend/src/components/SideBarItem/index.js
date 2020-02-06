@@ -52,12 +52,16 @@ const SideBarItem = ({ chat, currentUserId }) => {
   const { subscribeToMore } = useQuery(ALL_MESSAGES_QUERY, {
     variables: { chatId: chat.id }
   });
+  const { data: userData } = useQuery(ME_QUERY);
 
   useEffect(() => {
     const unsubscribe = subscribeToMore({
       document: MESSAGE_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
         const newMessage = subscriptionData.data.message;
+
+        if (newMessage.node.from.id === userData.me.id) return prev;
+
         const newMessages = {
           ...prev,
           messages: {
@@ -75,7 +79,7 @@ const SideBarItem = ({ chat, currentUserId }) => {
     });
 
     return () => unsubscribe();
-  }, [subscribeToMore]);
+  }, [subscribeToMore, userData]);
 
   const getColor = int =>
     ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"][int - 1];

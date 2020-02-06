@@ -5,14 +5,22 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
 
 const SEND_MESSAGE_MUTATION = gql`
-  mutation SEND_MESSAGE_MUTATION($id: ID! $text: String!) {
-    createMessage(chatId: $id text: $text) {
+  mutation SEND_MESSAGE_MUTATION($id: ID!, $text: String!) {
+    createMessage(chatId: $id, text: $text) {
       id
+      text
+      from {
+        id
+        name
+        color
+      }
+      chatId
+      createdAt
     }
   }
 `;
 
-const StyledChatMessage = styled.div`
+const StyledSendMessage = styled.div`
   height: 100%;
   form {
     height: 100%;
@@ -31,25 +39,58 @@ const StyledChatMessage = styled.div`
   }
 `;
 
-const ChatMessage = () => {
+const SendMessage = () => {
   const [message, setMessage] = useState("");
   const { id } = useParams();
   const [sendMessage] = useMutation(SEND_MESSAGE_MUTATION);
+  const { data: userData } = useQuery(ME_QUERY);
 
   const handleChange = e => {
     e.preventDefault();
     setMessage(e.target.value);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    if (!message) return
-    sendMessage({ variables: { id, text: message } });
+    if (!message) return;
+    sendMessage({
+      variables: { id, text: message },
+      optimisticResponse: {
+        __typename: "Mutation",
+        createMessage: {
+          id,
+          chatId: null,
+          __typename: "Message",
+          from: userData.me,
+          text: message,
+          createdAt: new Date()
+        }
+      },
+      update: (proxy, { data: { createMessage } }) => {
+        const data = proxy.readQuery({
+          query: ALL_MESSAGES_QUERY,
+          variables: { chatId: id }
+        });
+
+        proxy.writeQuery({
+          query: ALL_MESSAGES_QUERY,
+          variables: { chatId: id },
+          data: {
+            ...data,
+            messages: {
+              __typename: data.messages.__typename,
+              pageInfo: data.messages.pageInfo,
+              edges: [...data.messages.edges, {__typename: "MessageEdge", node: {...createMessage}}]
+            }
+          }
+        });
+      }
+    });
     setMessage("");
   };
 
   return (
-    <StyledChatMessage>
+    <StyledSendMessage>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -58,8 +99,8 @@ const ChatMessage = () => {
           onChange={handleChange}
         />
       </form>
-    </StyledChatMessage>
+    </StyledSendMessage>
   );
 };
 
-export default ChatMessage;
+export default SendMessage;

@@ -34,7 +34,7 @@ const MainWindow = () => {
     <StyledMainWindow>
       <Header room={room} currentUserId={userData && userData.me.id} />
       {messages ? <ChatHistory data={messages} fetchMore={fetchMore} loading={loading} /> : <div />}
-      <ChatMessage />
+      <SendMessage />
     </StyledMainWindow>
   );
 };
