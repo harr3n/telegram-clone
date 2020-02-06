@@ -42,16 +42,16 @@ const ChatHistory = ({ data, fetchMore, loading }) => {
 
     const element = chatHistory.current.children[10];
 
-    const observer = new IntersectionObserver(([entry]) => {
+    const observer = new IntersectionObserver( async ([entry]) => {
       const pageInfo = data.messages.pageInfo;
 
       if (entry.isIntersecting && pageInfo.hasPreviousPage) {
-        fetchMore({
+        await fetchMore({
           variables: { chatId: id, before: pageInfo.startCursor },
           updateQuery: (prev, { fetchMoreResult }) => {
             const newEdges = fetchMoreResult.messages.edges;
             const pageInfo = fetchMoreResult.messages.pageInfo;
-            chatHistory.current.scrollTop = element.scrollHeight;
+            
 
             return newEdges.length
               ? {
@@ -64,6 +64,7 @@ const ChatHistory = ({ data, fetchMore, loading }) => {
               : prev;
           }
         });
+        chatHistory.current.scrollTop = element.offsetTop
       }
     }, options);
 
