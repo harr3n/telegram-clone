@@ -19,6 +19,32 @@ const ME_QUERY = gql`
   }
 `;
 
+const ALL_MESSAGES_QUERY = gql`
+  query messages($chatId: ID!, $before: String) {
+    messages(chatId: $chatId, before: $before) {
+      pageInfo {
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          text
+          createdAt
+          chatId
+          from {
+            id
+            name
+            color
+          }
+        }
+      }
+    }
+  }
+`;
+
 export {
-    ME_QUERY
+    ME_QUERY,
+    ALL_MESSAGES_QUERY
 }
