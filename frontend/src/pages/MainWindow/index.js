@@ -4,39 +4,14 @@ import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import styled from "styled-components";
 import ChatHistory from "../../components/ChatHistory";
 import Header from "../../components/Header";
-import ChatMessage from "../../components/SendMessage";
-import { ME_QUERY } from "../../api/queries";
+import SendMessage from "../../components/SendMessage";
+import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
 
 const StyledMainWindow = styled.div`
   height: 100vh;
   background-color: ${props => props.theme.background};
   display: grid;
   grid-template-rows: 3rem 1fr 3rem;
-`;
-
-const ALL_MESSAGES_QUERY = gql`
-  query messages($chatId: ID!, $before: String) {
-    messages(chatId: $chatId, before: $before) {
-      pageInfo {
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      edges {
-        node {
-          id
-          text
-          createdAt
-          chatId
-          from {
-            id
-            name
-            color
-          }
-        }
-      }
-    }
-  }
 `;
 
 const MainWindow = () => {

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
+import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
 
 const StyledSideBarItem = styled.div`
   .active {
@@ -26,31 +27,6 @@ const StyledSideBarItem = styled.div`
     height: 100%;
     text-decoration: none;
     color: transparent;
-  }
-`;
-
-const ALL_MESSAGES_QUERY = gql`
-  query messages($chatId: ID!, $before: String) {
-    messages(chatId: $chatId, before: $before) {
-      pageInfo {
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      edges {
-        node {
-          id
-          text
-          createdAt
-          chatId
-          from {
-            id
-            name
-            color
-          }
-        }
-      }
-    }
   }
 `;
 
