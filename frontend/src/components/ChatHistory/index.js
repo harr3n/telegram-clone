@@ -67,9 +67,9 @@ const ChatHistory = ({ data, fetchMore, loading }) => {
       }
     }, options);
 
-    observer.observe(element);
+    element && observer.observe(element);
 
-    return () => observer.unobserve(element);
+    return () => element && observer.unobserve(element);
   }, [chatHistory, loader, data, fetchMore, id]);
 
   return (
