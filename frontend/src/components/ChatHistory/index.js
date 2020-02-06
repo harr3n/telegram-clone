@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect} from "react";
 import styled from "styled-components";
 import ChatMessage from "../ChatMessage";
 import { useParams } from "react-router";
+import useScrollAtBottom from "../../lib/useScrollAtBottom"
 
 const StyledChatHistory = styled.ul`
   margin: 0 0 0 1rem;
@@ -18,12 +19,16 @@ const StyledChatHistory = styled.ul`
 const ChatHistory = ({ data, fetchMore, loading }) => {
   const chatHistory = useRef(null);
   const loader = useRef(null);
-
+  const { scrollAtBottom, scrollRef } = useScrollAtBottom()
   const { id } = useParams();
 
   useEffect(() => {
+    if (scrollAtBottom) chatHistory.current.scrollTop = chatHistory.current.scrollHeight;
+  }, [data, scrollAtBottom]);
+
+  useEffect(() => {
     chatHistory.current.scrollTop = chatHistory.current.scrollHeight;
-  }, []);
+  }, [id, chatHistory]);
 
   useEffect(() => {
     if (!chatHistory || !chatHistory.current) return;
