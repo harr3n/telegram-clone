@@ -35,7 +35,7 @@ const StyledChatMessage = styled.li`
   }
 `;
 
-const ChatMessage = ({ message }) => {
+const ChatMessage = ({ message, forwardRef }) => {
   if (!message) return null;
 
   const colors = ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"];
@@ -55,7 +55,7 @@ const ChatMessage = ({ message }) => {
   };
 
   return (
-    <StyledChatMessage>
+    <StyledChatMessage ref={forwardRef}>
       <div className="avatar">
         <SmallUserBadge color={getColor(message.from.name)}>
           {message.from.name.substring(0, 1)}

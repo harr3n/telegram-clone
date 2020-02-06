@@ -77,7 +77,7 @@ const ChatHistory = ({ data, fetchMore, loading }) => {
       <li ref={loader}>{loading ? "loading..." : null}</li>
       {data &&
         data.messages.edges.map(({ node }) => (
-          <ChatMessage id={node.id} key={node.id} message={node} />
+          <ChatMessage id={node.id} key={node.id} message={node} forwardRef={scrollRef} />
         ))}
     </StyledChatHistory>
   );
