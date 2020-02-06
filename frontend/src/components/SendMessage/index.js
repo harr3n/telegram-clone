@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
+import { uuid } from 'uuidv4'
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
 
@@ -58,8 +59,8 @@ const SendMessage = () => {
       optimisticResponse: {
         __typename: "Mutation",
         createMessage: {
-          id,
-          chatId: null,
+          id: uuid(),
+          chatId: id,
           __typename: "Message",
           from: userData.me,
           text: message,
