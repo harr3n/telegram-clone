@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import SmallUserBadge from "../../styles/SmallUserBadge";
+import SmallUserBadge from "../../styles/UserBadge";
+import Avatar from "../Avatar"
 
 const StyledChatMessage = styled.li`
   display: grid;
@@ -38,11 +39,6 @@ const StyledChatMessage = styled.li`
 const ChatMessage = ({ message, forwardRef }) => {
   if (!message) return null;
 
-  const colors = ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"];
-
-  const getColor = name =>
-    colors[name.toLocaleLowerCase().charCodeAt(0) % colors.length];
-
   const getTimeString = dateString => {
     const date = new Date(dateString);
     let hrs = date.getHours();
@@ -57,9 +53,7 @@ const ChatMessage = ({ message, forwardRef }) => {
   return (
     <StyledChatMessage ref={forwardRef}>
       <div className="avatar">
-        <SmallUserBadge color={getColor(message.from.name)}>
-          {message.from.name.substring(0, 1)}
-        </SmallUserBadge>
+        <Avatar size="small" user={message.from} />
       </div>
       <div className="message">
         <span className="name">{message.from.name}</span>

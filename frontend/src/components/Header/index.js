@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import SmallUserBadge from "../../styles/SmallUserBadge";
+import Avatar from "../Avatar"
 
 const StyledHeader = styled.div`
   display: flex;
@@ -23,14 +23,10 @@ const Header = ({ room, currentUserId }) => {
   if (!room) return <div></div>
   
   const otherUser = room.users.find(user => user.id !== currentUserId);
-  const getColor = int =>
-    ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"][int - 1];
 
   return (
     <StyledHeader>
-      <SmallUserBadge className="avatar" color={getColor(otherUser.color)}>
-        {otherUser.name.substring(0, 1)}
-      </SmallUserBadge>
+      <Avatar className="avatar" size="small" user={otherUser} />
       <span>{otherUser.name}</span>
     </StyledHeader>
   );

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
+import Avatar from "../Avatar"
 
 const StyledSideBarItem = styled.div`
   .active {
@@ -89,9 +90,7 @@ const SideBarItem = ({ chat, currentUserId }) => {
   return (
     <StyledSideBarItem color={color}>
       <NavLink activeClassName="active" to={`/chat/${chat.id}`}>
-        <div className="bubble">
-          {otherUser.name.substring(0, 1).toUpperCase()}
-        </div>
+        <Avatar size="big" user={otherUser} />
       </NavLink>
     </StyledSideBarItem>
   );

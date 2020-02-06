@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useMutation, gql } from "@apollo/client";
 import { useHistory } from "react-router";
 
-import SmallUserBadge from "../../styles/SmallUserBadge";
+import Avatar from "../Avatar"
 
 const CREATE_CHAT_MUTATION = gql`
   mutation CREATE_CHAT_MUTATION($id: ID!) {
@@ -57,9 +57,7 @@ const UserListItem = ({ user }) => {
   return (
     <StyledUserListItem onClick={addUser}>
       <div className="avatar">
-        <SmallUserBadge color={getColor(user.color)}>
-          {user.name.substring(0, 1)}
-        </SmallUserBadge>
+        <Avatar size="small" user={user} />
       </div>
       <div className="name">{user.name}</div>
     </StyledUserListItem>
