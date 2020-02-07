@@ -5,8 +5,8 @@ directive @isAuth(
 
 type Mutation {
     createMessage(chatId: ID, text: String): Message @isAuth
-    signup(email: String!, password: String!, name: String!): User!
-    signin(name: String!, password: String!): User!
+    signup(email: String!, password: String!, name: String!): String!
+    signin(name: String!, password: String!): String!
     signout: String @isAuth
     createChat(id: ID!): Chat! @isAuth
 }

@@ -11,15 +11,14 @@ const app = express();
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-  const { token } = req.cookies;
+  const authorizationHeader = req.headers.authorization;
+  const token = authorizationHeader && authorizationHeader.split(" ")[1]
   if (token) {
     const { userId } = jwt.verify(token, process.env.APP_SECRET);
     req.userId = userId;
   }
   next();
 });
-
-console.log(process.env.NODE_ENV)
 
 const server = createServer();
 server.applyMiddleware({

@@ -19,17 +19,16 @@ const createServer = () => {
       Subscription
     },
     subscriptions: {
-      onConnect: (params, socket) => {
-        const { token } = socket.upgradeReq.headers.cookie
-          ? cookie.parse(socket.upgradeReq.headers.cookie)
-          : {};
+      onConnect: (params) => {
+        const authorizationHeader = params.headers.Authorization;
+        const token = authorizationHeader && authorizationHeader.split(" ")[1];
 
         if (!token) throw new Error("Missing token");
 
         const { userId } = jwt.verify(token, process.env.APP_SECRET);
 
         if (!userId) throw new Error("Invalid token");
-        
+
         return { userId };
       }
     },

@@ -6,9 +6,7 @@ import useFormState from '../../lib/useFormState'
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($name: String!, $password: String!) {
-    signin(name: $name, password: $password) {
-      id
-    }
+    signin(name: $name, password: $password)
   }
 `;
 
@@ -41,9 +39,11 @@ const SignIn = () => {
 
   const submit = async e => {
     e.preventDefault();
-    const user = await signin({ variables: { name: state.name, password: state.password }, refetchQueries: ["ME_QUERY"] });
-
-    if (!user) return 
+    const {data: {signin: token}} = await signin({ variables: { name: state.name, password: state.password }, refetchQueries: ["ME_QUERY"] });
+    console.log(token)
+    if (!token) return 
+    localStorage.setItem("token", token)
+    
     resetForm()
     history.push("/")
   };
