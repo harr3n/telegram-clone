@@ -35,16 +35,9 @@ const Mutation = {
           permissions: { set: ["USER"] }
         }
       },
-      info
     );
-      console.log(user)
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
-    // ctx.res.cookie("token", token, {
-    //   httpOnly: true,
-    //   maxAge: 1000 * 60 * 60 * 24 * 365 
-    // });
 
-    // return user;
     return token;
   },
   async signin(parent, { name, password }, ctx, info) {
@@ -59,13 +52,6 @@ const Mutation = {
     }
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
-    // ctx.res.cookie("token", token, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   maxAge: 1000 * 60 * 60 * 24 * 365 
-    // });
-
-    // return user;
     return token
   },
   signout(parent, args, ctx, info) {
