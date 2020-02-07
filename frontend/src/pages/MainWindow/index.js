@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import styled from "styled-components";
 import ChatHistory from "../../components/ChatHistory";
 import Header from "../../components/Header";

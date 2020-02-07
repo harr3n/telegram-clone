@@ -80,7 +80,7 @@ const SideBarItem = ({ chat, currentUserId }) => {
     });
 
     return () => unsubscribe();
-  }, [subscribeToMore, userData]);
+  }, [subscribeToMore, userData, chat]);
 
   const getColor = int =>
     ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"][int - 1];

@@ -38,8 +38,6 @@ const StyledUserListItem = styled.li`
 const UserListItem = ({ user }) => {
   const history = useHistory();
   const [createChat] = useMutation(CREATE_CHAT_MUTATION);
-  const getColor = int =>
-    ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"][int - 1];
 
   const addUser = async () => {
     const {

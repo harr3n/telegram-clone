@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-
-import SmallUserBadge from "../../styles/UserBadge";
 import Avatar from "../Avatar"
 
 const StyledChatMessage = styled.li`

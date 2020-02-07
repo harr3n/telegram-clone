@@ -6,6 +6,7 @@ const useScrollAtBottom = () => {
 
   useEffect(() => {
     if (!scrollRef || !scrollRef.current) return;
+    const current = scrollRef.current;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -20,9 +21,9 @@ const useScrollAtBottom = () => {
       }
     );
 
-    observer.observe(scrollRef.current)
+    observer.observe(current)
 
-    return () => observer.unobserve(scrollRef.current)
+    return () => observer.unobserve(current)
   }, [scrollRef]);
 
   return {
