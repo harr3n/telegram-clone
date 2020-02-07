@@ -1,8 +1,8 @@
 import React from "react";
-import { gql, useMutation } from "@apollo/client";
-import styled from 'styled-components'
-import { useHistory } from "react-router";
+import { gql, useMutation, useLazyQuery } from "@apollo/client";
+import styled from "styled-components";
 import useFormState from "../../lib/useFormState";
+import { ME_QUERY } from "../../api/queries";
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -10,9 +10,7 @@ const SIGNUP_MUTATION = gql`
     $name: String!
     $password: String!
   ) {
-    signup(email: $email, name: $name, password: $password) {
-      id
-    }
+    signup(email: $email, name: $name, password: $password)
   }
 `;
 
@@ -40,25 +38,31 @@ const SignUp = () => {
     name: "",
     password: ""
   });
-  
+
   const [signup] = useMutation(SIGNUP_MUTATION);
-  const history = useHistory();
+  const [getMe, { loading }] = useLazyQuery(ME_QUERY);
 
   const submit = async e => {
     e.preventDefault();
-    const user = await signup({
+    const {
+      data: { signup: token }
+    } = await signup({
       variables: {
         email: state.email,
         name: state.name,
         password: state.password
-      },
-      refetchQueries: ["ME_QUERY"]
+      }
     });
 
-    if (!user) return;
+    if (!token) return;
+    localStorage.setItem("token", token);
+    getMe()
     resetForm();
-    history.push("/");
   };
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
 
   return (
     <form method="post" onSubmit={submit}>

@@ -1,8 +1,8 @@
 import React from "react";
-import { gql, useMutation } from "@apollo/client";
-import styled from 'styled-components'
-import { useHistory } from "react-router";
-import useFormState from '../../lib/useFormState'
+import { gql, useMutation, useLazyQuery } from "@apollo/client";
+import styled from "styled-components";
+import useFormState from "../../lib/useFormState";
+import { ME_QUERY } from "../../api/queries";
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($name: String!, $password: String!) {
@@ -29,24 +29,28 @@ const StyledInput = styled.input`
 `;
 
 const SignIn = () => {
-  const {state, handleChange, resetForm} = useFormState({
-    name: '',
-    password: ''
-  })
-  
+  const { state, handleChange, resetForm } = useFormState({
+    name: "",
+    password: ""
+  });
+
   const [signin] = useMutation(SIGNIN_MUTATION);
-  const history = useHistory();
+  const [getMe, { loading }] = useLazyQuery(ME_QUERY);
 
   const submit = async e => {
     e.preventDefault();
-    const {data: {signin: token}} = await signin({ variables: { name: state.name, password: state.password }, refetchQueries: ["ME_QUERY"] });
-    console.log(token)
-    if (!token) return 
-    localStorage.setItem("token", token)
-    
-    resetForm()
-    history.push("/")
+    const {
+      data: { signin: token }
+    } = await signin({
+      variables: { name: state.name, password: state.password },
+    });
+    if (!token) return;
+    localStorage.setItem("token", token);
+    getMe()
+    resetForm();
   };
+
+  if (loading) return <p>Loading...</p>
 
   return (
     <form method="post" onSubmit={submit}>
