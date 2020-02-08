@@ -8,10 +8,10 @@ import {
 
 import { WebSocketLink } from "apollo-link-ws";
 import { setContext } from "apollo-link-context";
-import { CachePersistor } from 'apollo-cache-persist'
+// import { CachePersistor } from 'apollo-cache-persist-dev'
 
-const SCHEMA_VERSION = '1'
-const SCHEMA_VERSION_KEY = 'apollo-schema-version'
+// const SCHEMA_VERSION = '1'
+// const SCHEMA_VERSION_KEY = 'apollo-schema-version'
 
 const createClient = () => {
   const httpLink = new HttpLink({
@@ -44,7 +44,7 @@ const createClient = () => {
       lazy: true,
       reconnect: true,
       connectionParams: async () => {
-        const token = await localStorage.getItem("token");
+        const token = localStorage.getItem("token");
         return {
           headers: {
             Authorization: token ? `Bearer ${token}` : ""
@@ -68,26 +68,26 @@ const createClient = () => {
 
   const cache = new InMemoryCache();
 
-  const persistor = new CachePersistor({
-    cache,
-    storage: window.localStorage,
-  })
-
-  const currentVersion = window.localStorage.getItem(SCHEMA_VERSION_KEY)
-
-  if (currentVersion === SCHEMA_VERSION) {
-    persistor.restore()
-  } else {
-    persistor.purge()
-    window.localStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION)
-  }
-
-
   const client = new ApolloClient({
     cache,
     link,
     credentials: "include"
   });
+
+  // const persistor = new CachePersistor({
+  //   cache: cache,
+  //   storage: window.localStorage,
+  //   debug: true,
+  //   trigger: false,
+  // })
+
+  // const currentVersion = window.localStorage.getItem(SCHEMA_VERSION_KEY)
+  // if (currentVersion === SCHEMA_VERSION) {
+  //   persistor.restore()
+  // } else {
+  //   persistor.purge()
+  //   window.localStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION)
+  // }
 
   return client;
 };
