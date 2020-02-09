@@ -62,20 +62,3 @@ const AddUser = () => {
 };
 
 export default AddUser;
-
-// <form method="post" onSubmit={submit}>
-//   <fieldset>
-//     <h2>Add a user to chat wit</h2>
-//     <label htmlFor="userid">
-//       UserID
-//       <input
-//         type="text"
-//         name="id"
-//         placeholder="UserId"
-//         value={state.id}
-//         onChange={handleChange}
-//       />
-//     </label>
-//     <button type="submit">Add User</button>
-//   </fieldset>
-// </form>

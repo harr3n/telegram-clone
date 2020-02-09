@@ -9,18 +9,6 @@ const StyledSideBarItem = styled.div`
   .active {
     background-color: ${props => props.theme.highlight};
   }
-  .bubble {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 4rem;
-    width: 4rem;
-    background-color: ${props => props.color};
-    border-radius: 50%;
-    color: ${props => props.theme.text};
-    font-weight: bold;
-  }
-
   a {
     display: flex;
     justify-content: center;
@@ -82,13 +70,10 @@ const SideBarItem = ({ chat, currentUserId }) => {
     return () => unsubscribe();
   }, [subscribeToMore, userData, chat]);
 
-  const getColor = int =>
-    ["#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"][int - 1];
   const otherUser = chat.users.find(user => user.id !== currentUserId);
-  const color = getColor(otherUser.color);
 
   return (
-    <StyledSideBarItem color={color}>
+    <StyledSideBarItem>
       <NavLink activeClassName="active" to={`/chat/${chat.id}`}>
         <Avatar size="big" user={otherUser} />
       </NavLink>

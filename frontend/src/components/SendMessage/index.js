@@ -64,7 +64,7 @@ const SendMessage = () => {
           __typename: "Message",
           from: userData.me,
           text: message,
-          createdAt: new Date()
+          createdAt: new Date(),
         }
       },
       update: (proxy, { data: { createMessage } }) => {

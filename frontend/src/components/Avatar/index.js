@@ -9,7 +9,7 @@ const Avatar = ({ user, size }) => {
 
   return (
       <UserBadge className="avatar" size={size} color={getColor(user.name)}>
-        {user.name.substring(0, 1)}
+        {user.name.substring(0, 1).toUpperCase()}
       </UserBadge>
   );
 };

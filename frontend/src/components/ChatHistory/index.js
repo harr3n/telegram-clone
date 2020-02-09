@@ -10,6 +10,7 @@ const StyledChatHistory = styled.ul`
   overflow: scroll;
   display: flex;
   flex-direction: column;
+  -webkit-overflow-scrolling: touch;
 
   li:first-child {
     margin-top: auto;
