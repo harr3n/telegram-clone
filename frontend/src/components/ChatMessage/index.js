@@ -24,6 +24,7 @@ const StyledChatMessage = styled.li`
       color: ${({ theme }) => theme.highlight};
     }
     .text {
+      overflow-wrap: break-word;
       overflow: hidden;
       font-size: 1.5rem;
       margin: 0;
