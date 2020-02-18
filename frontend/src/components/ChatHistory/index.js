@@ -20,11 +20,12 @@ const StyledChatHistory = styled.ul`
 const ChatHistory = ({ data, fetchMore, loading }) => {
   const chatHistory = useRef(null);
   const loader = useRef(null);
-  const { scrollAtBottom, scrollRef } = useScrollAtBottom()
+  const { scrollAtBottom, scrollRef } = useScrollAtBottom();
   const { id } = useParams();
 
   useEffect(() => {
-    if (scrollAtBottom) chatHistory.current.scrollTop = chatHistory.current.scrollHeight;
+    if (scrollAtBottom)
+      chatHistory.current.scrollTop = chatHistory.current.scrollHeight;
   }, [data, scrollAtBottom]);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const ChatHistory = ({ data, fetchMore, loading }) => {
 
     const element = chatHistory.current.children[10];
 
-    const observer = new IntersectionObserver( async ([entry]) => {
+    const observer = new IntersectionObserver(async ([entry]) => {
       const pageInfo = data.messages.pageInfo;
 
       if (entry.isIntersecting && pageInfo.hasPreviousPage) {
@@ -80,7 +81,7 @@ const ChatHistory = ({ data, fetchMore, loading }) => {
         data.messages.edges.map(({ node }) => (
           <ChatMessage id={node.id} key={node.id} message={node} />
         ))}
-        <li ref={scrollRef}></li>
+      <li ref={scrollRef}></li>
     </StyledChatHistory>
   );
 };

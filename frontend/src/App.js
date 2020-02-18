@@ -13,11 +13,7 @@ const StyledApp = styled.div`
   display: grid;
   height: 100vh;
   background-color: ${props => props.theme.background};
-  grid-template-rows: 3rem 1fr 3rem;
-  @media (min-width: 812px) {
-    grid-template-columns: 5rem 1fr;
-    grid-template-rows: none;
-  }
+  grid-template-columns: 5rem 1fr;
 `;
 
 const night = {

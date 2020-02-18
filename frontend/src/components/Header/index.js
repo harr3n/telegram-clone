@@ -11,7 +11,6 @@ const StyledHeader = styled.div`
   background-color: ${props => props.theme.background};
   border-bottom: 0.1px solid ${props => props.theme.border};
   color: ${props => props.theme.text};
-  justify-content: space-between;
 
   .desktop {
     display: none;
@@ -35,9 +34,8 @@ const Header = ({ room, currentUserId }) => {
 
   return (
     <StyledHeader>
-      <div>Back</div>
-      <span>{otherUser.name}</span>
       <Avatar className="avatar" size="small" user={otherUser} />
+      <span>{otherUser.name}</span>
     </StyledHeader>
   );
 };

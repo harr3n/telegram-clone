@@ -7,22 +7,18 @@ import SideBarItem from "../SideBarItem";
 import { ME_QUERY } from "../../api/queries";
 
 const StyledSidebar = styled.div`
-  display: none;
-
-  @media (min-width: 812px) {
-    .addUser {
-      justify-self: center;
-      align-self: center;
-      color: ${props => props.theme.highlight};
-    }
-    height: 100vh;
-    width: 5rem;
-    background-color: ${props => props.theme.background};
-    border-right: 0.02px solid ${props => props.theme.border};
-    display: grid;
-    grid-template-rows: 3rem;
-    grid-auto-rows: 5rem;
+  .addUser {
+    justify-self: center;
+    align-self: center;
+    color: ${props => props.theme.highlight};
   }
+  height: 100vh;
+  width: 5rem;
+  background-color: ${props => props.theme.background};
+  border-right: 0.02px solid ${props => props.theme.border};
+  display: grid;
+  grid-template-rows: 3rem;
+  grid-auto-rows: 5rem;
 `;
 
 const Sidebar = () => {
