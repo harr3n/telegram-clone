@@ -9,6 +9,7 @@ type Mutation {
     signin(name: String!, password: String!): String!
     signout: String @isAuth
     createChat(id: ID!): Chat! @isAuth
+    createGuest: String!
 }
 
 type Query {

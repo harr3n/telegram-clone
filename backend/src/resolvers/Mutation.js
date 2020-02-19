@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { uniqueNamesGenerator, adjectives, colors, animals } = require('unique-names-generator');
 
 const Mutation = {
   async createMessage(parent, args, ctx, info) {
@@ -53,6 +54,27 @@ const Mutation = {
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     return token
+  },
+  async createGuest(parent, args, ctx, info) {
+    const name = uniqueNamesGenerator({
+      dictionaries: [adjectives, animals],
+      separator: " ",
+      length: 2
+    });
+    console.log(name)
+    const password = await bcrypt.hash(name, 10); // YEYE, guest account, don't caaaare.
+    const user = await ctx.db.mutation.createUser(
+      {
+        data: {
+          name,
+          email: `${name}@example.com`,
+          password, 
+          permissions: { set: ["USER"] }
+        }
+      },
+    );
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    return token;
   },
   signout(parent, args, ctx, info) {
     ctx.res.clearCookie("token");
