@@ -34,7 +34,7 @@ const StyledInput = styled.input`
 `;
 
 const SignUp = ({setShowSignUp}) => {
-  const { state, handleChange, resetForm } = useFormState({
+  const { state, handleChange } = useFormState({
     email: "",
     name: "",
     password: ""
@@ -58,8 +58,7 @@ const SignUp = ({setShowSignUp}) => {
 
     if (!token) return;
     localStorage.setItem("token", token);
-    getMe()
-    resetForm();
+    getMe();
   };
 
   return (

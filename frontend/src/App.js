@@ -89,16 +89,15 @@ const App = () => {
           <StyledApp>
             <Router>
               <IsSignedIn>
+                <Sidebar />
                 <Switch>
                   <Route exact path="/">
-                    <Sidebar />
+
                   </Route>
                   <Route path="/chat/:id">
-                    <Sidebar />
                     <MainWindow />
                   </Route>
                   <Route path="/add-user">
-                    <Sidebar />
                     <AddUser />
                   </Route>
                 </Switch>

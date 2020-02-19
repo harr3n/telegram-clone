@@ -30,7 +30,7 @@ const StyledInput = styled.input`
 `;
 
 const SignIn = ({setShowSignUp}) => {
-  const { state, handleChange, resetForm } = useFormState({
+  const { state, handleChange } = useFormState({
     name: "",
     password: ""
   });
@@ -53,7 +53,6 @@ const SignIn = ({setShowSignUp}) => {
 
     localStorage.setItem("token", token);
     getMe()
-    resetForm();
   };
 
   return (
