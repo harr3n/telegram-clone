@@ -62,7 +62,7 @@ const Mutation = {
       length: 2
     });
     name = name.split(" ").map(word => word.charAt(0).toUpperCase() + word.substring(1)).join("");
-    const password = await bcrypt.hash(name, 10); // YEYE, guest account, don't caaaare.
+    const password = await bcrypt.hash(name, 10);
     const user = await ctx.db.mutation.createUser(
       {
         data: {
