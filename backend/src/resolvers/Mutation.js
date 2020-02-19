@@ -56,12 +56,12 @@ const Mutation = {
     return token
   },
   async createGuest(parent, args, ctx, info) {
-    const name = uniqueNamesGenerator({
+    let name = uniqueNamesGenerator({
       dictionaries: [adjectives, animals],
       separator: " ",
       length: 2
     });
-    console.log(name)
+    name = name.split(" ").map(word => word.charAt(0).toUpperCase() + word.substring(1)).join("");
     const password = await bcrypt.hash(name, 10); // YEYE, guest account, don't caaaare.
     const user = await ctx.db.mutation.createUser(
       {
