@@ -8,6 +8,7 @@ import Sidebar from "./components/SideBar/index";
 import MainWindow from "./pages/MainWindow";
 import AddUser from "./pages/AddUser";
 import IsSignedIn from "./components/IsSignedIn";
+import NoChat from "./components/NoChat";
 
 const StyledApp = styled.div`
   display: grid;
@@ -92,13 +93,16 @@ const App = () => {
                 <Sidebar />
                 <Switch>
                   <Route exact path="/">
-                    <p>Select a chat to start messaging</p>
+                    <NoChat />
                   </Route>
                   <Route path="/chat/:id">
                     <MainWindow />
                   </Route>
                   <Route path="/add-user">
                     <AddUser />
+                  </Route>
+                  <Route path="*">
+                    <NoChat />
                   </Route>
                 </Switch>
               </IsSignedIn>
