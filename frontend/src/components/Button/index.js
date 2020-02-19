@@ -10,6 +10,7 @@ const StyledButton = styled.button`
     font-weight: bold;
     font-size: 1rem;
     transition: all .5s .25s ease-out;
+    cursor: pointer;
 `;
 
 const Button = ({children, ...props}) => {

@@ -32,6 +32,10 @@ const StyledInput = styled.input`
   }
 `;
 
+const StyledAddUser = styled.div`
+  overflow: scroll;
+`
+
 const AddUser = () => {
   const { data } = useQuery(GET_USERS_QUERY);
   const { state, handleChange } = useFormState({
@@ -42,7 +46,7 @@ const AddUser = () => {
     data && data.users.filter(user => user.name.toLowerCase().includes(state.name.toLowerCase()));
 
   return (
-    <div>
+    <StyledAddUser>
       <form>
         <StyledInput
           type="text"
@@ -57,7 +61,7 @@ const AddUser = () => {
       <ul>
         {users && users.map(user => <UserListItem key={user.id} user={user} />)}
       </ul>
-    </div>
+    </StyledAddUser>
   );
 };
 

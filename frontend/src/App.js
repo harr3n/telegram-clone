@@ -92,7 +92,7 @@ const App = () => {
                 <Sidebar />
                 <Switch>
                   <Route exact path="/">
-
+                    <p>Select a chat to start messaging</p>
                   </Route>
                   <Route path="/chat/:id">
                     <MainWindow />

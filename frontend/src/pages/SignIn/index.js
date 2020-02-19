@@ -11,6 +11,12 @@ const SIGNIN_MUTATION = gql`
   }
 `;
 
+const CREATE_GUEST_MUTATION = gql`
+  mutation CREATE_GUEST_MUTATION {
+    createGuest
+  }
+`;
+
 const StyledInput = styled.input`
   margin-bottom: 1rem;
   padding: 0 0 0 0.5rem;
@@ -36,6 +42,7 @@ const SignIn = ({setShowSignUp}) => {
   });
 
   const [signin, {loading: loginLoading}] = useMutation(SIGNIN_MUTATION);
+  const [createGuest, {loading: guestLoading}] = useMutation(CREATE_GUEST_MUTATION);
   const [getMe, { loading }] = useLazyQuery(ME_QUERY);
   const isLoading = loading || loginLoading
 
@@ -54,6 +61,17 @@ const SignIn = ({setShowSignUp}) => {
     localStorage.setItem("token", token);
     getMe()
   };
+
+  const createGuestAccount = async () => {
+    const {
+      data: { createGuest: token }
+    } = await createGuest()
+
+    if(!token) return
+    
+    localStorage.setItem("token", token);
+    getMe();
+  }
 
   return (
     <form method="post" onSubmit={submit}>
@@ -78,7 +96,9 @@ const SignIn = ({setShowSignUp}) => {
         </label>
         <Button type="submit" disabled={isLoading}>{isLoading ? 'Logging in...' : 'Sign in'}</Button>
       </fieldset>
-      <span onClick={() => setShowSignUp(true)}>Don't have an account?</span>
+      
+      <p style={{cursor: "pointer"}} onClick={createGuestAccount}>{loading || guestLoading ? "Creating your account..." : "Click here to create a guest account"}</p>
+      <p style={{"font-size": "0.8rem", cursor: "pointer"}} onClick={() => setShowSignUp(true)}>or create your own account</p >
     </form>
   );
 };
