@@ -3,6 +3,7 @@ import { gql, useMutation, useLazyQuery } from "@apollo/client";
 import styled from "styled-components";
 import useFormState from "../../lib/useFormState";
 import { ME_QUERY } from "../../api/queries";
+import Button from "../../components/Button"
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($name: String!, $password: String!) {
@@ -28,36 +29,37 @@ const StyledInput = styled.input`
   }
 `;
 
-const SignIn = () => {
+const SignIn = ({setShowSignUp}) => {
   const { state, handleChange, resetForm } = useFormState({
     name: "",
     password: ""
   });
 
-  const [signin] = useMutation(SIGNIN_MUTATION);
+  const [signin, {loading: loginLoading}] = useMutation(SIGNIN_MUTATION);
   const [getMe, { loading }] = useLazyQuery(ME_QUERY);
+  const isLoading = loading || loginLoading
 
   const submit = async e => {
     e.preventDefault();
+    if (!state.name || !state.password) return 
+
     const {
       data: { signin: token }
     } = await signin({
       variables: { name: state.name, password: state.password },
     });
+
     if (!token) return;
+
     localStorage.setItem("token", token);
     getMe()
     resetForm();
   };
 
-  if (loading) return <p>Loading...</p>
-
   return (
     <form method="post" onSubmit={submit}>
       <fieldset>
-        <h2>Sign in</h2>
         <label htmlFor="name">
-          name
           <StyledInput
             type="text"
             name="name"
@@ -67,7 +69,6 @@ const SignIn = () => {
           />
         </label>
         <label htmlFor="password">
-          password
           <StyledInput
             type="password"
             name="password"
@@ -76,8 +77,9 @@ const SignIn = () => {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">SIGN IN</button>
+        <Button type="submit" disabled={isLoading}>{isLoading ? 'Logging in...' : 'Sign in'}</Button>
       </fieldset>
+      <span onClick={() => setShowSignUp(true)}>Don't have an account?</span>
     </form>
   );
 };
