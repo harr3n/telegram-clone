@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { uuid } from 'uuidv4'
+import { uuid } from "uuidv4";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
+import { ReactComponent as SendIcon } from "../Send/SendIcon.svg";
 
 const SEND_MESSAGE_MUTATION = gql`
   mutation SEND_MESSAGE_MUTATION($id: ID!, $text: String!) {
@@ -24,7 +25,10 @@ const SEND_MESSAGE_MUTATION = gql`
 const StyledSendMessage = styled.div`
   height: 100%;
   form {
+    display: grid;
+    grid-template-columns: 1fr 3rem;
     height: 100%;
+    border-top: 0.1px solid ${props => props.theme.border};
   }
   input {
     margin: 0;
@@ -34,9 +38,16 @@ const StyledSendMessage = styled.div`
     outline: none;
     appearance: none;
     border: none;
-    background-color: ${props => props.theme.background};
-    border-top: 0.1px solid ${props => props.theme.border};
+    background-color: transparent;
     font-size: 1rem;
+  }
+
+  svg {
+    height: 1.5rem;
+    width: 1.5rem;
+    align-self: center;
+    margin: 0.5rem;
+    transition: all 2s ease-in;
   }
 `;
 
@@ -52,7 +63,7 @@ const SendMessage = () => {
   };
 
   const handleSubmit = async e => {
-    e.preventDefault();
+    e && e.preventDefault();
     if (!message) return;
     sendMessage({
       variables: { id, text: message },
@@ -64,7 +75,7 @@ const SendMessage = () => {
           __typename: "Message",
           from: userData.me,
           text: message,
-          createdAt: new Date(),
+          createdAt: new Date()
         }
       },
       update: (proxy, { data: { createMessage } }) => {
@@ -81,7 +92,10 @@ const SendMessage = () => {
             messages: {
               __typename: data.messages.__typename,
               pageInfo: data.messages.pageInfo,
-              edges: [...data.messages.edges, {__typename: "MessageEdge", node: {...createMessage}}]
+              edges: [
+                ...data.messages.edges,
+                { __typename: "MessageEdge", node: { ...createMessage } }
+              ]
             }
           }
         });
@@ -99,6 +113,7 @@ const SendMessage = () => {
           value={message}
           onChange={handleChange}
         />
+        {message ? <SendIcon onClick={handleSubmit} /> : null}
       </form>
     </StyledSendMessage>
   );
