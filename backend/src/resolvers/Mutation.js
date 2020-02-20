@@ -1,6 +1,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { uniqueNamesGenerator, adjectives, colors, animals } = require('unique-names-generator');
+const {
+  uniqueNamesGenerator,
+  adjectives,
+  colors,
+  animals
+} = require("unique-names-generator");
 
 const Mutation = {
   async createMessage(parent, args, ctx, info) {
@@ -19,7 +24,7 @@ const Mutation = {
         },
         info
       );
-
+      console.log(message);
       return message;
     } catch (err) {
       console.log(err);
@@ -28,15 +33,13 @@ const Mutation = {
   async signup(parent, args, ctx, info) {
     args.email = args.email.toLowerCase();
     const password = await bcrypt.hash(args.password, 10);
-    const user = await ctx.db.mutation.createUser(
-      {
-        data: {
-          ...args,
-          password,
-          permissions: { set: ["USER"] }
-        }
-      },
-    );
+    const user = await ctx.db.mutation.createUser({
+      data: {
+        ...args,
+        password,
+        permissions: { set: ["USER"] }
+      }
+    });
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 
     return token;
@@ -53,7 +56,7 @@ const Mutation = {
     }
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
-    return token
+    return token;
   },
   async createGuest(parent, args, ctx, info) {
     let name = uniqueNamesGenerator({
@@ -61,18 +64,19 @@ const Mutation = {
       separator: " ",
       length: 2
     });
-    name = name.split(" ").map(word => word.charAt(0).toUpperCase() + word.substring(1)).join("");
+    name = name
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.substring(1))
+      .join("");
     const password = await bcrypt.hash(name, 10);
-    const user = await ctx.db.mutation.createUser(
-      {
-        data: {
-          name,
-          email: `${name}@example.com`,
-          password, 
-          permissions: { set: ["USER"] }
-        }
-      },
-    );
+    const user = await ctx.db.mutation.createUser({
+      data: {
+        name,
+        email: `${name}@example.com`,
+        password,
+        permissions: { set: ["USER"] }
+      }
+    });
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     return token;
   },
@@ -81,8 +85,8 @@ const Mutation = {
     return "Bye";
   },
   async createChat(parent, args, ctx, info) {
-    if (ctx.userId === args.id) throw new Error("You can't add yourself")
-    
+    if (ctx.userId === args.id) throw new Error("You can't add yourself");
+
     const [exists] = await ctx.db.query.chats({
       where: {
         AND: [
@@ -102,18 +106,22 @@ const Mutation = {
 
     if (exists) return { id: exists.id };
 
-    const chat = await ctx.db.mutation.createChat(
-      {
-        data: {
-          users: {
-            connect: [{ id: ctx.userId }, { id: args.id }]
+    try {
+      const chat = await ctx.db.mutation.createChat(
+        {
+          data: {
+            users: {
+              connect: [{ id: ctx.userId }, { id: args.id }]
+            }
           }
-        }
-      },
-      info
-    );
-    return chat;
-  },
+        },
+        info
+      );
+      return chat;
+    } catch (e) {
+      console.err(e);
+    }
+  }
 };
 
 module.exports = Mutation;

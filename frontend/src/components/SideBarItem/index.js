@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
-import Avatar from "../Avatar"
+import Avatar from "../Avatar";
 
 const StyledSideBarItem = styled.div`
   .active {

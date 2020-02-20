@@ -3,12 +3,26 @@ import styled from "styled-components";
 import { useMutation, gql } from "@apollo/client";
 import { useHistory } from "react-router";
 
-import Avatar from "../Avatar"
+import Avatar from "../Avatar";
 
 const CREATE_CHAT_MUTATION = gql`
   mutation CREATE_CHAT_MUTATION($id: ID!) {
     createChat(id: $id) {
       id
+      users {
+        id
+        name
+      }
+      messages(last: 1) {
+        id
+        text
+        createdAt
+        chatId
+        from {
+          id
+          name
+        }
+      }
     }
   }
 `;

@@ -17,6 +17,22 @@ const Subscription = {
       );
       return message;
     }
+  },
+  chat: {
+    async subscribe(parent, args, ctx, info) {
+      const chat = await ctx.db.subscription.chat(
+        {
+          where: {
+            node: {
+              users_some: { id: ctx.userId }
+            },
+            mutation_in: ["CREATED", "UPDATED"]
+          }
+        },
+        info
+      );
+      return chat;
+    }
   }
 };
 

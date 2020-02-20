@@ -1,8 +1,8 @@
-import React, { useRef, useEffect} from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import ChatMessage from "../ChatMessage";
 import { useParams } from "react-router";
-import useScrollAtBottom from "../../lib/useScrollAtBottom"
+import useScrollAtBottom from "../../lib/useScrollAtBottom";
 
 const StyledChatHistory = styled.ul`
   margin: 0 0 0 1rem;
@@ -53,7 +53,6 @@ const ChatHistory = ({ data, fetchMore, loading }) => {
           updateQuery: (prev, { fetchMoreResult }) => {
             const newEdges = fetchMoreResult.messages.edges;
             const pageInfo = fetchMoreResult.messages.pageInfo;
-            
 
             return newEdges.length
               ? {

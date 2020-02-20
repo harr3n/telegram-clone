@@ -1,23 +1,29 @@
 # import * from './generated/prisma.graphql'
-directive @isAuth(
-  role: Permission = USER,
-) on FIELD_DEFINITION
+directive @isAuth(role: Permission = USER) on FIELD_DEFINITION
 
 type Mutation {
-    createMessage(chatId: ID, text: String): Message @isAuth
-    signup(email: String!, password: String!, name: String!): String!
-    signin(name: String!, password: String!): String!
-    signout: String @isAuth
-    createChat(id: ID!): Chat! @isAuth
-    createGuest: String!
+  createMessage(chatId: ID, text: String): Message @isAuth
+  signup(email: String!, password: String!, name: String!): String!
+  signin(name: String!, password: String!): String!
+  signout: String @isAuth
+  createChat(id: ID!): Chat! @isAuth
+  createGuest: String!
 }
 
 type Query {
-    messages(chatId: ID, orderBy: String, first: Int, last: Int, before: String): MessageConnection @isAuth
-    me: User @isAuth
-    users: [User] @isAuth
+  messages(
+    chatId: ID
+    orderBy: String
+    first: Int
+    last: Int
+    before: String
+  ): MessageConnection @isAuth
+  me: User @isAuth
+  users: [User] @isAuth
+  chats(id: ID): [Chat!]! @isAuth
 }
 
 type Subscription {
-    message(chatId: ID!): MessageSubscriptionPayload @isAuth
+  message(chatId: ID!): MessageSubscriptionPayload @isAuth
+  chat: ChatSubscriptionPayload @isAuth
 }

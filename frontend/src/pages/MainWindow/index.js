@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ChatHistory from "../../components/ChatHistory";
 import Header from "../../components/Header";
 import SendMessage from "../../components/SendMessage";
-import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
+import { ME_QUERY, ALL_MESSAGES_QUERY, CHATS_QUERY } from "../../api/queries";
 
 const StyledMainWindow = styled.div`
   height: 100vh;
@@ -16,7 +16,8 @@ const StyledMainWindow = styled.div`
 
 const MainWindow = () => {
   const { id } = useParams();
-  const { data: userData } = useQuery(ME_QUERY) 
+  const { data: userData } = useQuery(ME_QUERY);
+  const { data: chatsData } = useQuery(CHATS_QUERY);
   const [getAllMessages, { data: messages, fetchMore, loading }] = useLazyQuery(
     ALL_MESSAGES_QUERY,
     {
@@ -24,7 +25,7 @@ const MainWindow = () => {
     }
   );
 
-  const room = userData && userData.me.chats.find(room => room.id === id);
+  const room = chatsData && chatsData.chats.find(room => room.id === id);
 
   useEffect(() => {
     getAllMessages();
@@ -33,7 +34,11 @@ const MainWindow = () => {
   return (
     <StyledMainWindow>
       <Header room={room} currentUserId={userData && userData.me.id} />
-      {messages ? <ChatHistory data={messages} fetchMore={fetchMore} loading={loading} /> : <div />}
+      {messages ? (
+        <ChatHistory data={messages} fetchMore={fetchMore} loading={loading} />
+      ) : (
+        <div />
+      )}
       <SendMessage />
     </StyledMainWindow>
   );

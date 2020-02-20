@@ -19,6 +19,28 @@ const ME_QUERY = gql`
   }
 `;
 
+const CHATS_QUERY = gql`
+  query CHATS_QUERY($id: ID) {
+    chats(id: $id) {
+      id
+      users {
+        id
+        name
+      }
+      messages(last: 1) {
+        id
+        text
+        createdAt
+        chatId
+        from {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
 const ALL_MESSAGES_QUERY = gql`
   query messages($chatId: ID!, $before: String) {
     messages(chatId: $chatId, before: $before) {
@@ -44,7 +66,4 @@ const ALL_MESSAGES_QUERY = gql`
   }
 `;
 
-export {
-    ME_QUERY,
-    ALL_MESSAGES_QUERY
-}
+export { ME_QUERY, ALL_MESSAGES_QUERY, CHATS_QUERY };
