@@ -55,13 +55,11 @@ const Sidebar = () => {
     const unsubscribe = subscribeToMore({
       document: CHAT_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
-        console.log(prev);
         const newChat = subscriptionData.data.chat.node;
 
         const newChats = {
           chats: [...prev.chats, newChat]
         };
-        console.log(newChats);
         return newChats;
       }
     });

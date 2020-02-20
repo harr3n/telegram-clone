@@ -47,7 +47,6 @@ const StyledSendMessage = styled.div`
     width: 1.5rem;
     align-self: center;
     margin: 0.5rem;
-    transition: all 2s ease-in;
   }
 `;
 
