@@ -60,7 +60,7 @@ const UserListItem = ({ user }) => {
       variables: {
         id: user.id
       },
-      refetchQueries: ["ME_QUERY"]
+      refetchQueries: ["CHATS_QUERY"]
     });
     if (!chat) return;
     history.push(`/chat/${chat.id}`);
