@@ -8,10 +8,6 @@ import {
 
 import { WebSocketLink } from "apollo-link-ws";
 import { setContext } from "apollo-link-context";
-// import { CachePersistor } from 'apollo-cache-persist-dev'
-
-// const SCHEMA_VERSION = '1'
-// const SCHEMA_VERSION_KEY = 'apollo-schema-version'
 
 const createClient = () => {
   const httpLink = new HttpLink({
@@ -23,9 +19,8 @@ const createClient = () => {
   });
 
   const authLink = setContext((_, { headers }) => {
-    // get the authentication token from local storage if it exists
     const token = localStorage.getItem("token");
-    // return the headers to the context so httpLink can read them
+    
     return {
       headers: {
         ...headers,
@@ -73,21 +68,6 @@ const createClient = () => {
     link,
     credentials: "include"
   });
-
-  // const persistor = new CachePersistor({
-  //   cache: cache,
-  //   storage: window.localStorage,
-  //   debug: true,
-  //   trigger: false,
-  // })
-
-  // const currentVersion = window.localStorage.getItem(SCHEMA_VERSION_KEY)
-  // if (currentVersion === SCHEMA_VERSION) {
-  //   persistor.restore()
-  // } else {
-  //   persistor.purge()
-  //   window.localStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION)
-  // }
 
   return client;
 };

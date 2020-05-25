@@ -13,7 +13,7 @@ import NoChat from "./components/NoChat";
 const StyledApp = styled.div`
   display: grid;
   height: 100vh;
-  background-color: ${props => props.theme.background};
+  background-color: ${(props) => props.theme.background};
   grid-template-columns: auto 1fr;
 `;
 
@@ -21,14 +21,14 @@ const night = {
   background: "#2E3440",
   border: "#3B4252",
   text: "#E5E9F0",
-  highlight: "#88C0D0"
+  highlight: "#88C0D0",
 };
 
 const day = {
   background: "#eceff4",
   border: "#d8dee9",
   text: "#2e3440",
-  highlight: "#88C0D0"
+  highlight: "#88C0D0",
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -43,18 +43,18 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        margin: 0;
-        padding: 0;
-        font-size: 1.5rem;
-        color: ${props => props.theme.text};
-        font-family: 'Roboto', sans-serif;
-        -webkit-tap-highlight-color: transparent;
-        -webkit-touch-callout: none;
+      margin: 0;
+      padding: 0;
+      font-size: 1.5rem;
+      color: ${(props) => props.theme.text};
+      font-family: 'Roboto', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
     }
 
     a {
-        text-decoration: none;
-        color: ${props => props.theme.text}
+      text-decoration: none;
+      color: ${(props) => props.theme.text}
     }
 
     fieldset {
@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     input {
-      color: ${props => props.theme.text}
+      color: ${(props) => props.theme.text}
     }
 
     ul {
@@ -73,9 +73,9 @@ const GlobalStyle = createGlobalStyle`
     button {
       user-select: none;
       appearance: none;
-    font-family: inherit;
-    outline: none;
-    border: none;
+      font-family: inherit;
+      outline: none;
+      border: none;
     }
 `;
 

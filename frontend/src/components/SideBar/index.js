@@ -66,8 +66,6 @@ const Sidebar = () => {
       document: CHAT_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
         const newChat = subscriptionData.data.chat.node;
-        console.log("subscribe to more chat")
-
         const newChats = {
           chats: [...prev.chats, newChat]
         };
