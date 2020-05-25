@@ -1,8 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import ChatMessage from "../ChatMessage";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import useScrollAtBottom from "../../lib/useScrollAtBottom";
+import useEventListener from "../../lib/useEventListener"
 
 const StyledChatHistory = styled.ul`
   margin: 0 0 0 1rem;
@@ -22,6 +23,13 @@ const ChatHistory = ({ data, fetchMore, loading }) => {
   const loader = useRef(null);
   const { scrollAtBottom, scrollRef } = useScrollAtBottom();
   const { id } = useParams();
+  const history = useHistory();
+
+  useEventListener('keydown', (e) => {
+    if (e.keyCode === 27) {
+      history.push(`/chat`)
+    }
+  })
 
   useEffect(() => {
     if (scrollAtBottom)
