@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { useQuery, gql } from "@apollo/client";
-import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
+import { useQuery, gql, useLazyQuery } from "@apollo/client";
+import { ME_QUERY, ALL_MESSAGES_QUERY , CHATS_QUERY} from "../../api/queries";
 import Avatar from "../Avatar";
 
 const StyledSideBarItem = styled.div`
@@ -42,6 +42,10 @@ const SideBarItem = ({ chat, currentUserId }) => {
     variables: { chatId: chat.id }
   });
   const { data: userData } = useQuery(ME_QUERY);
+  const [refetchChats] = useLazyQuery(
+    CHATS_QUERY,
+    { fetchPolicy: "network-only"}
+  );
 
   useEffect(() => {
     const unsubscribe = subscribeToMore({
@@ -59,7 +63,7 @@ const SideBarItem = ({ chat, currentUserId }) => {
             edges: [...prev.messages.edges, newMessage]
           }
         };
-
+        refetchChats();
         return newMessages;
       },
       variables: {

@@ -50,12 +50,23 @@ const Sidebar = () => {
   const { data: chatsData, subscribeToMore } = useQuery(CHATS_QUERY);
   const me = data && data.me;
   const chats = chatsData && chatsData.chats;
+  const sortedChats = chats && [...chats].sort((a, b) => {
+    if (a.messages.length === 0) return 1;
+    else if(b.messages.length === 0) return -1;
+
+    const dateA = a.messages[0].createdAt
+    const dateB = b.messages[0].createdAt
+
+    if (dateA > dateB) return -1;
+    return 1;
+  })
 
   useEffect(() => {
     const unsubscribe = subscribeToMore({
       document: CHAT_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
         const newChat = subscriptionData.data.chat.node;
+        console.log("subscribe to more chat")
 
         const newChats = {
           chats: [...prev.chats, newChat]
@@ -75,8 +86,8 @@ const Sidebar = () => {
         </NavLink>
       )}
       {me &&
-        chats &&
-        chats.map(chat => (
+        sortedChats &&
+        sortedChats.map(chat => (
           <SideBarItem
             key={chat.id}
             currentUserId={me.id}

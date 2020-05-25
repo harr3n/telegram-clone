@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import { uuid } from "uuidv4";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { ME_QUERY, ALL_MESSAGES_QUERY } from "../../api/queries";
+import { gql, useMutation, useQuery, useLazyQuery } from "@apollo/client";
+import { ME_QUERY, ALL_MESSAGES_QUERY, CHATS_QUERY } from "../../api/queries";
 import { ReactComponent as SendIcon } from "../Send/SendIcon.svg";
 
 const SEND_MESSAGE_MUTATION = gql`
@@ -55,6 +55,10 @@ const SendMessage = () => {
   const { id } = useParams();
   const [sendMessage] = useMutation(SEND_MESSAGE_MUTATION);
   const { data: userData } = useQuery(ME_QUERY);
+  const [refetchChats] = useLazyQuery(
+    CHATS_QUERY,
+    { fetchPolicy: "network-only"}
+  );
 
   const handleChange = e => {
     e.preventDefault();
@@ -64,7 +68,7 @@ const SendMessage = () => {
   const handleSubmit = async e => {
     e && e.preventDefault();
     if (!message) return;
-    sendMessage({
+    await sendMessage({
       variables: { id, text: message },
       optimisticResponse: {
         __typename: "Mutation",
@@ -100,6 +104,7 @@ const SendMessage = () => {
         });
       }
     });
+    refetchChats();
     setMessage("");
   };
 
