@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Avatar from "../Avatar";
+import {getTimeString} from "../../lib/date"
 
 const StyledChatMessage = styled.li`
   display: grid;
@@ -38,18 +39,6 @@ const StyledChatMessage = styled.li`
 
 const ChatMessage = ({ message }) => {
   if (!message) return null;
-
-  const getTimeString = dateString => {
-    const date = new Date(dateString);
-    let hrs = date.getHours();
-    let min = date.getMinutes();
-
-    hrs = hrs < 10 ? `0${hrs}` : hrs;
-    min = min < 10 ? `0${min}` : min;
-
-    return `${hrs}:${min}`;
-  };
-
   return (
     <StyledChatMessage>
       <div className="avatar">
