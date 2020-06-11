@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
@@ -7,18 +7,18 @@ import SideBarItem from "../SideBarItem";
 import { ME_QUERY, CHATS_QUERY } from "../../api/queries";
 
 const StyledSidebar = styled.div`
-  .addUser {
-    justify-self: center;
-    align-self: center;
-    color: ${props => props.theme.highlight};
-  }
   height: 100vh;
-  width: 5rem;
-  background-color: ${props => props.theme.background};
-  border-right: 0.02px solid ${props => props.theme.border};
+  width: ${(props) => props.isExpanded ? '25rem' : '5rem'};
+  background-color: ${(props) => props.theme.background};
+  border-right: 0.02px solid ${(props) => props.theme.border};
   display: grid;
   grid-template-rows: 3rem;
   grid-auto-rows: 5rem;
+  .addUser {
+    justify-self: center;
+    align-self: center;
+    color: ${(props) => props.theme.highlight};
+  }
 `;
 
 const CHAT_SUBSCRIPTION = gql`
@@ -48,18 +48,24 @@ const CHAT_SUBSCRIPTION = gql`
 const Sidebar = () => {
   const { data } = useQuery(ME_QUERY);
   const { data: chatsData, subscribeToMore } = useQuery(CHATS_QUERY);
+  const [isExpanded, setIsExpanded] = useState(true);
+
+
   const me = data && data.me;
   const chats = chatsData && chatsData.chats;
-  const sortedChats = chats && [...chats].sort((a, b) => {
-    if (a.messages.length === 0) return 1;
-    else if(b.messages.length === 0) return -1;
+  const sortedChats =
+    chats &&
+    [...chats]
+      .sort((a, b) => {
+      if (a.messages.length === 0) return 1;
+      else if (b.messages.length === 0) return -1;
 
-    const dateA = a.messages[0].createdAt
-    const dateB = b.messages[0].createdAt
+      const dateA = a.messages[0].createdAt;
+      const dateB = b.messages[0].createdAt;
 
-    if (dateA > dateB) return -1;
-    return 1;
-  })
+      if (dateA > dateB) return -1;
+      return 1;
+    });
 
   useEffect(() => {
     const unsubscribe = subscribeToMore({
@@ -67,31 +73,34 @@ const Sidebar = () => {
       updateQuery: (prev, { subscriptionData }) => {
         const newChat = subscriptionData.data.chat.node;
         const newChats = {
-          chats: [...prev.chats, newChat]
+          chats: [...prev.chats, newChat],
         };
         return newChats;
-      }
+      },
     });
 
     return () => unsubscribe();
   }, [subscribeToMore]);
 
   return (
-    <StyledSidebar>
+    <StyledSidebar isExpanded={isExpanded}>
       {me && (
         <NavLink className="addUser" to={`/add-user`}>
           +
         </NavLink>
       )}
+
       {me &&
         sortedChats &&
-        sortedChats.map(chat => (
+        sortedChats.map((chat) => (
           <SideBarItem
             key={chat.id}
             currentUserId={me.id}
             chat={chat}
+            sidebarIsExpanded={isExpanded}
           ></SideBarItem>
         ))}
+        <button onClick={() => setIsExpanded(!isExpanded)}>Test</button>
     </StyledSidebar>
   );
 };

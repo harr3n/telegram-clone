@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const UserBadge = styled.div`
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     height: ${props => props.size === "small" ? "2rem" : "4rem"};
