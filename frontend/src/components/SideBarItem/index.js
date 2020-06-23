@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useQuery, gql, useLazyQuery } from "@apollo/client";
+
 import { ME_QUERY, ALL_MESSAGES_QUERY, CHATS_QUERY } from "../../api/queries";
 import Avatar from "../Avatar";
 import { getTimeString } from "../../lib/date";
 
 const StyledSideBarItem = styled.div`
+  height: 5rem;
+  /* margin: 0.5rem 0; */
   .active {
     background-color: ${(props) => props.theme.highlight};
   }
@@ -17,7 +20,6 @@ const StyledSideBarItem = styled.div`
       props.sidebarIsExpanded ? "start" : "center"};
     align-items: center;
     height: 100%;
-    max-width: 25rem;
     text-decoration: none;
     color: transparent;
     padding-left: ${(props) => (props.sidebarIsExpanded ? "0.5rem" : "0")};

@@ -5,20 +5,35 @@ import { useQuery, gql } from "@apollo/client";
 
 import SideBarItem from "../SideBarItem";
 import { ME_QUERY, CHATS_QUERY } from "../../api/queries";
+import useEventListener from "../../lib/useEventListener";
+import { useHistory } from "react-router";
 
 const StyledSidebar = styled.div`
+  display: flex;
+  flex-direction: column;
   height: 100vh;
-  width: ${(props) => props.isExpanded ? '25rem' : '5rem'};
+  width: ${(props) => (props.isExpanded ? "25rem" : "5rem")};
   background-color: ${(props) => props.theme.background};
   border-right: 0.02px solid ${(props) => props.theme.border};
-  display: grid;
-  grid-template-rows: 3rem;
-  grid-auto-rows: 5rem;
+
+  .list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+
   .addUser {
     justify-self: center;
     align-self: center;
     color: ${(props) => props.theme.highlight};
+    height: 3rem;
   }
+`;
+
+const StyledMenu = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const CHAT_SUBSCRIPTION = gql`
@@ -48,15 +63,22 @@ const CHAT_SUBSCRIPTION = gql`
 const Sidebar = () => {
   const { data } = useQuery(ME_QUERY);
   const { data: chatsData, subscribeToMore } = useQuery(CHATS_QUERY);
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const history = useHistory();
 
+  useEventListener('keydown', (e) => {
+    console.log(e)
+    const keyNumber = parseInt(e.key)
+    if ((e.ctrlKey || e.metaKey ) && keyNumber) {
+      history.push(`/chat/${sortedChats[keyNumber-1].id}`)
+    }
+  })
 
   const me = data && data.me;
   const chats = chatsData && chatsData.chats;
-  const sortedChats =
+  const sortedChats = //useMemo?
     chats &&
-    [...chats]
-      .sort((a, b) => {
+    [...chats].sort((a, b) => {
       if (a.messages.length === 0) return 1;
       else if (b.messages.length === 0) return -1;
 
@@ -90,17 +112,28 @@ const Sidebar = () => {
         </NavLink>
       )}
 
-      {me &&
-        sortedChats &&
-        sortedChats.map((chat) => (
-          <SideBarItem
-            key={chat.id}
-            currentUserId={me.id}
-            chat={chat}
-            sidebarIsExpanded={isExpanded}
-          ></SideBarItem>
-        ))}
-        <button onClick={() => setIsExpanded(!isExpanded)}>Test</button>
+      <div className="list">
+        {me &&
+          sortedChats &&
+          sortedChats.map((chat) => (
+            <SideBarItem
+              key={chat.id}
+              currentUserId={me.id}
+              chat={chat}
+              sidebarIsExpanded={isExpanded}
+            ></SideBarItem>
+          ))}
+      </div>
+
+      {isExpanded ? (
+        <StyledMenu>
+          <div onClick={() => setIsExpanded(!isExpanded)}>{"<<"}</div>
+          <div>C</div>
+          <div>S</div>
+        </StyledMenu>
+      ) : (
+        <button onClick={() => setIsExpanded(!isExpanded)}>{">>"}</button>
+      )}
     </StyledSidebar>
   );
 };
