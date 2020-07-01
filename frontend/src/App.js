@@ -4,11 +4,12 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import { ApolloProvider } from "@apollo/client";
 
 import createClient from "./lib/createClient";
-import Sidebar from "./components/SideBar/index";
 import MainWindow from "./pages/MainWindow";
 import AddUser from "./pages/AddUser";
+import Settings from "./pages/Settings"
 import IsSignedIn from "./components/IsSignedIn";
 import NoChat from "./components/NoChat";
+import Sidebar from "./components/SideBar/index";
 
 const StyledApp = styled.div`
   display: grid;
@@ -100,6 +101,9 @@ const App = () => {
                   </Route>
                   <Route path="/add-user">
                     <AddUser />
+                  </Route>
+                  <Route path="/settings">
+                    <Settings setDarkMode={setDarkMode} darkMode={darkMode} />
                   </Route>
                   <Route path="*">
                     <NoChat />

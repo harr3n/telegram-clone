@@ -129,7 +129,7 @@ const Sidebar = () => {
         <StyledMenu>
           <div onClick={() => setIsExpanded(!isExpanded)}>{"<<"}</div>
           <div>C</div>
-          <div>S</div>
+          <div onClick={() => history.push(`/settings`)}>S</div>
         </StyledMenu>
       ) : (
         <button onClick={() => setIsExpanded(!isExpanded)}>{">>"}</button>
