@@ -103,7 +103,7 @@ const SideBarItem = ({ chat, currentUserId, sidebarIsExpanded }) => {
     });
 
     return () => unsubscribe();
-  }, [subscribeToMore, userData, chat]);
+  }, [subscribeToMore, userData, chat, refetchChats]);
 
   const otherUser = chat.users.find((user) => user.id !== currentUserId);
 
