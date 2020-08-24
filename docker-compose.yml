@@ -24,5 +24,10 @@ services:
       MYSQL_ROOT_PASSWORD: prisma
     volumes:
       - mysql:/var/lib/mysql
+  node:
+    image: telegram-clone:1.0
+    restart: always
+    ports: 
+      - "4444:4444"
 volumes:
   mysql:
