@@ -1,10 +1,12 @@
 # Telegram Clone
-A full stack chat app written in React and Node. 
+A chat app (PWA) written in React and Node with graphql. 
 <br />
 <a href="https://chat.erikolsson.dev/">Live Demo</a>  
 
 ## Features
 - Home rolled basic authentication
+- Friends list
+- One-on-one chat
 - PWA 
 - ... 
 
@@ -18,6 +20,7 @@ Because a project of this size gave me the ability to explore and learn a few th
 ## Technologies used
 - React 
 - Node 
+- PostgreSQL
 - Apollo graphql server and client
 - Prisma 
 - Styled-components
