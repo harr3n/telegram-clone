@@ -23,3 +23,4 @@ Because a project of this size gave me the ability to explore and learn a few th
 - Apollo graphql server and client
 - Prisma 
 - Styled-components
+- nginx
