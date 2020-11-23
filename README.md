@@ -1,5 +1,5 @@
 # Telegram Clone
-A chat app (PWA) written in React and Node with graphql. 
+A simple chat app (PWA) written in React and Node with GraphQL. 
 <br />
 <a href="https://chat.erikolsson.dev/">Live Demo</a>  
 
@@ -7,8 +7,7 @@ A chat app (PWA) written in React and Node with graphql.
 - Home rolled basic authentication
 - Friends list
 - One-on-one chat
-- PWA 
-- ... 
+- Dark mode
 
 ## Why?
 Because a project of this size gave me the ability to explore and learn a few things at once, mainly: 
@@ -16,6 +15,7 @@ Because a project of this size gave me the ability to explore and learn a few th
 - Graphql subscriptions on both the server and the client.
 - Prisma instead of a traditional database and ORM.
 - Hosting a SPA on Netlify
+- Setting up architechture with docker and docker-compose
 
 ## Technologies used
 - React 
