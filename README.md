@@ -1,7 +1,6 @@
 # Telegram Clone
 A simple chat app (PWA) written in React and Node with GraphQL. 
 <br />
-<a href="https://chat.erikolsson.dev/">Live Demo</a>  
 
 ## Features
 - Home rolled basic authentication
