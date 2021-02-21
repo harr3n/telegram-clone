@@ -27,6 +27,11 @@ services:
   node:
     image: telegram-clone:1.0
     restart: always
+    environment:
+      VIRTUAL_PORT: 4444
+      VIRTUAL_HOST: "gql.erikolsson.dev"
+      LETSENCRYPT_HOST: "gql.erikolsson.dev"
+      LETSENCRYPT_EMAIL: "erik@erikolsson.dev"
     ports: 
       - "4444:4444"
   nginx-proxy:
