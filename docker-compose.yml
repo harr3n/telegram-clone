@@ -26,7 +26,7 @@ services:
     volumes:
       - mysql:/var/lib/mysql
   node:
-    image: telegram-clone-node:1.0
+    image: telegram-clone-node:latest
     restart: always
     environment:
       VIRTUAL_PORT: 4444
