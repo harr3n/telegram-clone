@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const createServer = require("./createServer");
 const db = require("./db");
 
+console.log(process.env.PRISMA_ENDPOINT)
+
 const app = express();
 
 app.use(cookieParser());
