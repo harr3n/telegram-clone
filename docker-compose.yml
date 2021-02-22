@@ -6,6 +6,7 @@ services:
     ports:
       - "4466:4466"
     environment:
+      VIRTUAL_HOST: "prisma.local"
       PRISMA_CONFIG: |
         port: 4466
         managementApiSecret: my-secret
