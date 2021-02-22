@@ -36,4 +36,4 @@ server.applyMiddleware({
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
-httpServer.listen(process.env.PORT, () => console.log(`🚀 Server ready on port ${process.env.PORT} prisma endpoint ${process.env.PRISMA_ENDPOINT}`));
+httpServer.listen(process.env.PORT, () => console.log(`🚀 Server ready on port ${process.env.PORT}`));
